@@ -1,11 +1,25 @@
 <?php
 
+use App\Http\Controllers\BlueprintController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+Route::get('/contact', function() {
+    return view('contact');
+})->name('contact');
+
+Route::get('/about-us', function() {
+    $company = 'Total Automation Solutions';
+    return view('about-us', [
+        'company' => $company
+    ]);
+})->name('about-us');
+
+Route::resource('blueprints', BlueprintController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
