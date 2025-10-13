@@ -12,15 +12,14 @@ Route::get('/contact', function() {
     return view('contact');
 })->name('contact');
 
-Route::get('/about-us', function() {
+Route::get('/about', function() {
     $company = 'Total Automation Solutions';
-    return view('about-us', [
-        'company' => $company
-    ]);
-})->name('about-us');
+    return view('about', compact('company'));
+})->name('about');
 
 Route::resource('blueprints', BlueprintController::class);
 
+// blaze
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
