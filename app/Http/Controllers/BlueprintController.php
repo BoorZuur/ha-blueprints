@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blueprint;
 use Illuminate\Http\Request;
 
 class BlueprintController extends Controller
@@ -11,7 +12,7 @@ class BlueprintController extends Controller
      */
     public function index()
     {
-        $blueprints = [1, 2, 3, 4, 5];
+        $blueprints = Blueprint::all();
         return view('blueprints.index', compact('blueprints'));
     }
 
@@ -34,9 +35,9 @@ class BlueprintController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Blueprint $blueprint)
     {
-        return view('blueprints.show', compact('id'));
+        return view('blueprints.show', compact('blueprint'));
     }
 
     /**

@@ -9,9 +9,10 @@
 </head>
 <body>
     <h1>Blueprint Details</h1>
-    <p>ID: {{ $id }}</p>
-    <p>Name: </p>
-    <p>Description: </p>
+    <p>ID: {{ $blueprint->id }}</p>
+    <p>Name: {{ $blueprint->name }}</p>
+    <p>Description: {{ $blueprint->description }}</p>
+    <p>code: <code>{{ $blueprint->blueprint }}</code></p>
     <a href="{{ route('blueprints.index') }}">Back to list</a>
 </body>
 </html>

@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 [//]: # (### Removed)
 [//]: # (- item)
 
+## 14/10/2025
+### Added
+add Blueprint model, migrations for blueprints, tags, and likes; update views and routing
+
 ## 13/10/2025
 ### Added
 

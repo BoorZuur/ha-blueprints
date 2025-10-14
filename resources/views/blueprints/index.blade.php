@@ -12,8 +12,7 @@
 <ul>
     @foreach($blueprints as $blueprint)
         <li>
-            <a href="{{ route('blueprints.show', $blueprint) }}">{{$blueprint}}
-            </a>
+            <a href="{{ route('blueprints.show', $blueprint->id) }}">{{$blueprint->name}}</a>
         </li>
     @endforeach
 </ul>
