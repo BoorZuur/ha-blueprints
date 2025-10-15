@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('blueprints', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->references('id')->on('users');
-            $table->boolean('show');
+            $table->boolean('show')->default(false);
             $table->string('name');
             $table->string('description');
             $table->longText('blueprint');
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete()->references('id')->on('categories');
+            $table->timestamps();
         });
     }
 
