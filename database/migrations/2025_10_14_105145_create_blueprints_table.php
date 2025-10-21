@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,8 +16,9 @@ return new class extends Migration
             $table->boolean('show')->default(false);
             $table->string('name');
             $table->string('description');
+            $table->string('url')->nullable();
             $table->longText('blueprint');
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete()->references('id')->on('categories');
+            $table->foreignId('category_id')->constrained()->references('id')->on('categories');
             $table->timestamps();
         });
     }

@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -32,6 +33,27 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * Check if the user is an admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if the user is a regular user.
+     */
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
+    }
+
+    public function blueprints(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Blueprint::class);
+    }
 
     /**
      * Get the attributes that should be cast.

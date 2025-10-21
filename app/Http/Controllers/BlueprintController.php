@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blueprint;
-use Illuminate\Container\Attributes\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlueprintController extends Controller
 {
@@ -13,7 +13,7 @@ class BlueprintController extends Controller
      */
     public function index()
     {
-        $blueprints = Blueprint::all();
+        $blueprints = Blueprint::with(['user', 'category'])->get();
         return view('blueprints.index', compact('blueprints'));
     }
 
@@ -34,17 +34,19 @@ class BlueprintController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'url' => ['nullable', 'string', 'url', 'max:255'],
             'blueprint' => ['required', 'string'],
             'category' => ['required']
         ]);
         $blueprint = new Blueprint();
         $blueprint->name = $request->input('name');
         $blueprint->description = $request->input('description');
+        $blueprint->url = $request->input('url');
         $blueprint->blueprint = $request->input('blueprint');
         $blueprint->category_id = $request->input('category');
-        $blueprint->user_id = auth()->id();
+        $blueprint->user_id = Auth::id();
         $blueprint->save();
-        return redirect()->route('blueprints.index')->with('success', 'Blueprint created successfully.');
+        return redirect()->route('dashboard')->with('success', 'Blueprint created successfully.');
     }
 
     /**
@@ -52,7 +54,13 @@ class BlueprintController extends Controller
      */
     public function show(Blueprint $blueprint)
     {
-        return view('blueprints.show', compact('blueprint'));
+        $blueprint->load(['user', 'category']);
+        return view('blueprints.show', [
+            'blueprint' => $blueprint,
+            'username' => $blueprint->user->name,
+            'category' => $blueprint->category->name,
+            'icon' => $blueprint->category->icon,
+        ]);
     }
 
     /**
@@ -72,15 +80,17 @@ class BlueprintController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'url' => ['nullable', 'string', 'url', 'max:255'],
             'blueprint' => ['required', 'string'],
             'category' => ['required']
         ]);
         $blueprint->name = $request->input('name');
         $blueprint->description = $request->input('description');
+        $blueprint->url = $request->input('url');
         $blueprint->blueprint = $request->input('blueprint');
         $blueprint->category_id = $request->input('category');
         $blueprint->save();
-        return redirect()->route('blueprints.index')->with('success', 'Blueprint updated successfully.');
+        return redirect()->route('dashboard')->with('success', 'Blueprint updated successfully.');
     }
 
     /**
@@ -89,6 +99,6 @@ class BlueprintController extends Controller
     public function destroy(Blueprint $blueprint)
     {
         $blueprint->delete();
-        return redirect()->route('blueprints.index')->with('success', 'Blueprint deleted successfully.');
+        return redirect()->route('dashboard')->with('success', 'Blueprint deleted successfully.');
     }
 }

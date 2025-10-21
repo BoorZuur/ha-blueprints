@@ -106,8 +106,14 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('about')" :active="request()->routeIs('about')">
+                {{ __('About') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('contact')" :active="request()->routeIs('contact')">
+                {{ __('Contact') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('blueprints.index')" :active="request()->routeIs('blueprints.index')">
+                {{ __('Browse') }}
             </x-responsive-nav-link>
         </div>
 

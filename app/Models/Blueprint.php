@@ -6,11 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blueprint extends Model
 {
-    public function user() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    protected $fillable = [
+        'user_id',
+        'name',
+        'description',
+        'url',
+        'blueprint',
+        'category_id',
+        'show'
+    ];
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    public function category() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
