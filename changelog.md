@@ -24,6 +24,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 [//]: # (- item)
 
+## 23/10/2025
+
+### Added
+
+- faq on about page
+- How-to view
+
+### Changed
+
+- Headers on all pages except home page
+
 ## 21/10/2025
 
 ### Added

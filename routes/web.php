@@ -13,9 +13,12 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::get('/about', function () {
-    $company = 'Total Automation Solutions';
-    return view('about', compact('company'));
+    return view('about');
 })->name('about');
+
+Route::get('/how', function () {
+    return view('how');
+})->name('how');
 
 // blueprints
 //Route::resource('blueprints', BlueprintController::class);
