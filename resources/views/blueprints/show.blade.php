@@ -49,6 +49,7 @@
                     <!-- Import to Home Assistant -->
                     @if($blueprint->url)
                         <div class="mb-6">
+                            <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-2">Import</h4>
                             <a href="https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url={{ urlencode($blueprint->url) }}"
                                target="_blank"
                                rel="noreferrer noopener"
@@ -58,49 +59,8 @@
                             </a>
                         </div>
                     @endif
-
-                    <!-- Blueprint Code -->
-                    <div class="mb-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">
-                                Blueprint Code</h4>
-                            <button onclick="copyToClipboard()"
-                                    class="inline-flex items-center px-3 py-1.5 bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition">
-                                @svg('mdi-content-copy', 'w-4 h-4 mr-1')
-                                <span id="copy-text">Copy</span>
-                            </button>
-                        </div>
-                        <div class="relative">
-                            <pre id="blueprint-code"
-                                 class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4 rounded-lg overflow-x-auto border border-gray-200 dark:border-gray-700 text-sm leading-relaxed"><code>{{ $blueprint->blueprint }}</code></pre>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        function copyToClipboard() {
-            const codeElement = document.getElementById('blueprint-code');
-            const textToCopy = codeElement.textContent;
-            const copyButton = document.getElementById('copy-text');
-
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                // Change button text to indicate success
-                copyButton.textContent = 'Copied!';
-
-                // Reset button text after 2 seconds
-                setTimeout(() => {
-                    copyButton.textContent = 'Copy';
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-                copyButton.textContent = 'Error';
-                setTimeout(() => {
-                    copyButton.textContent = 'Copy';
-                }, 2000);
-            });
-        }
-    </script>
 </x-app-layout>

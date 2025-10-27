@@ -34,15 +34,13 @@ class BlueprintController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'url' => ['nullable', 'string', 'url', 'max:255'],
-            'blueprint' => ['required', 'string'],
+            'url' => ['required', 'string', 'url', 'max:255'],
             'category' => ['required']
         ]);
         $blueprint = new Blueprint();
         $blueprint->name = $request->input('name');
         $blueprint->description = $request->input('description');
         $blueprint->url = $request->input('url');
-        $blueprint->blueprint = $request->input('blueprint');
         $blueprint->category_id = $request->input('category');
         $blueprint->user_id = Auth::id();
         $blueprint->save();
@@ -80,14 +78,12 @@ class BlueprintController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'url' => ['nullable', 'string', 'url', 'max:255'],
-            'blueprint' => ['required', 'string'],
+            'url' => ['required', 'string', 'url', 'max:255'],
             'category' => ['required']
         ]);
         $blueprint->name = $request->input('name');
         $blueprint->description = $request->input('description');
         $blueprint->url = $request->input('url');
-        $blueprint->blueprint = $request->input('blueprint');
         $blueprint->category_id = $request->input('category');
         $blueprint->save();
         return redirect()->route('dashboard')->with('success', 'Blueprint updated successfully.');

@@ -34,10 +34,10 @@
                         </div>
 
                         <div class="mt-4">
-                            <x-input-label for="url" :value="__('URL (optional)')"/>
+                            <x-input-label for="url" :value="__('URL')"/>
                             <x-text-input id="url" name="url" type="url" class="mt-1 block w-full"
                                           :value="old('url')" placeholder="https://example.com/blueprint.yaml"/>
-                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Optional: Public URL where this
+                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">GitHub (gist) or Home Assistant Forum URL where this
                                 blueprint can be imported from</p>
                             <x-input-error class="mt-2" :messages="$errors->get('url')"/>
                         </div>
@@ -53,13 +53,6 @@
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
-
-                        <div class="mt-4">
-                            <x-input-label for="blueprint" :value="__('Blueprint')"/>
-                            <x-textarea id="blueprint" name="blueprint" class="mt-1 block w-full" required
-                                        autofocus>{{ old('blueprint') }}</x-textarea>
-                            <x-input-error class="mt-2" :messages="$errors->get('blueprint')"/>
                         </div>
 
                         <div class="mt-4">

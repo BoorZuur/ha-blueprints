@@ -11,7 +11,6 @@ class Blueprint extends Model
         'name',
         'description',
         'url',
-        'blueprint',
         'category_id',
         'show'
     ];

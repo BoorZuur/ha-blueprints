@@ -39,7 +39,7 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return $this->role === 1;
     }
 
     /**
@@ -47,7 +47,7 @@ class User extends Authenticatable
      */
     public function isUser(): bool
     {
-        return $this->role === 'user';
+        return $this->role === 0;
     }
 
     public function blueprints(): \Illuminate\Database\Eloquent\Relations\HasMany

@@ -16,8 +16,7 @@ return new class extends Migration {
             $table->boolean('show')->default(false);
             $table->string('name');
             $table->string('description');
-            $table->string('url')->nullable();
-            $table->longText('blueprint');
+            $table->string('url');
             $table->foreignId('category_id')->constrained()->references('id')->on('categories');
             $table->timestamps();
         });
