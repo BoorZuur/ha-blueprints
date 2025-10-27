@@ -24,6 +24,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 [//]: # (- item)
 
+## 27/10/2025
+
+### Changed
+- User roles from string to int
+- Update BlueprintController and views to require URL
+
+### Removed
+- Blueprint code field
+
 ## 23/10/2025
 
 ### Added
