@@ -24,6 +24,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 [//]: # (- item)
 
+## 28/10/2025
+### Added
+- Admin middleware
+- Admin controllers for users, blueprints, and categories
+- Admin routes
+
+### Changed
+- Update routes to include admin routes
+- Navbar links for admin panel
+
+### Removed
+- Remove tags table
+
 ## 27/10/2025
 
 ### Changed

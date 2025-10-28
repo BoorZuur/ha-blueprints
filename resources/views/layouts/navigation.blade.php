@@ -64,6 +64,13 @@
                                 {{ __('Dashboard') }}
                             </x-dropdown-link>
 
+                            <!-- Admin Dashboard Link -->
+                            @if(Auth::user()->isAdmin())
+                                <x-dropdown-link :href="route('admin.dashboard')">
+                                    {{ __('Admin Panel') }}
+                                </x-dropdown-link>
+                            @endif
+
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -140,6 +147,13 @@
                     <x-responsive-nav-link :href="route('dashboard')">
                         {{ __('Dashboard') }}
                     </x-responsive-nav-link>
+
+                    <!-- Admin Panel Link -->
+                    @if(Auth::user()->isAdmin())
+                        <x-responsive-nav-link :href="route('admin.dashboard')">
+                            {{ __('Admin Panel') }}
+                        </x-responsive-nav-link>
+                    @endif
 
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
