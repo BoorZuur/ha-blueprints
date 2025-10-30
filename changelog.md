@@ -24,6 +24,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 [//]: # (- item)
 
+30/10/2025
+### Added
+- Deployer to requirements
+
 ## 29/10/2025
 ### Added
 - Admin views for users, blueprints, and categories
