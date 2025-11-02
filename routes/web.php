@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BlueprintController as AdminBlueprintController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\BlueprintController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,11 @@ Route::delete('/blueprints/{blueprint}', [BlueprintController::class, 'destroy']
     ->middleware('auth')
     ->can('delete', 'blueprint')
     ->name('blueprints.destroy');
+// Like functionality
+Route::post('/blueprints/{blueprint}/like', [LikeController::class, 'toggle'])
+    ->middleware('auth')
+    ->name('blueprints.like');
+
 
 // blaze
 Route::get('/dashboard', function () {

@@ -55,6 +55,11 @@ class User extends Authenticatable
         return $this->hasMany(Blueprint::class);
     }
 
+    public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Like::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

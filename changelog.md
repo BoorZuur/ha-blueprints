@@ -30,6 +30,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Search and filter functionality for blueprints
 - Toggle button in admin blueprints list to switch visibility status
+- Like functionality for blueprints
+- Minimum 2 likes before creating blueprints
 
 ### Changed
 

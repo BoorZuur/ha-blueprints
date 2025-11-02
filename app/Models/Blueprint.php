@@ -24,4 +24,19 @@ class Blueprint extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function likesCount(): int
+    {
+        return $this->likes()->count();
+    }
+
+    public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function isLikedByUser($userId): bool
+    {
+        return $this->likes()->where('user_id', $userId)->exists();
+    }
 }

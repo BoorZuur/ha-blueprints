@@ -35,8 +35,24 @@
                                     @svg($blueprint->category->icon ?? 'mdi-tag', 'w-4 h-4')
                                     <span>{{ $blueprint->category->name }}</span>
                                 </div>
+                                <div class="flex items-center gap-1">
+                                    @svg('mdi-heart', 'w-4 h-4')
+                                    <span id="likes-count">{{ $likesCount }}</span>
+                                    <span>{{ $likesCount === 1 ? 'like' : 'likes' }}</span>
+                                </div>
                             </div>
                         </div>
+                        @auth
+                            <div class="flex-shrink-0">
+                                <button id="like-button"
+                                        data-blueprint-id="{{ $blueprint->id }}"
+                                        data-liked="{{ $isLiked ? 'true' : 'false' }}"
+                                        class="inline-flex items-center px-4 py-2 border rounded-md font-semibold text-xs uppercase tracking-widest transition {{ $isLiked ? 'bg-red-600 text-white border-red-600 hover:bg-red-700' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700' }}">
+                                    @svg($isLiked ? 'mdi-heart' : 'mdi-heart-outline', 'mr-2 h-4 w-4')
+                                    <span id="like-text">{{ $isLiked ? 'Liked' : 'Like' }}</span>
+                                </button>
+                            </div>
+                        @endauth
                     </div>
 
                     <!-- Description -->
@@ -49,7 +65,8 @@
                     <!-- Import to Home Assistant -->
                     @if($blueprint->url)
                         <div class="mb-6">
-                            <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-2">Import</h4>
+                            <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-2">
+                                Import</h4>
                             <a href="https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url={{ urlencode($blueprint->url) }}"
                                target="_blank"
                                rel="noreferrer noopener"
@@ -63,4 +80,51 @@
             </div>
         </div>
     </div>
+
+    @auth
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const likeButton = document.getElementById('like-button');
+                if (!likeButton) return;
+
+                const blueprintId = likeButton.dataset.blueprintId;
+                const likesCountElement = document.getElementById('likes-count');
+                const likeTextElement = document.getElementById('like-text');
+
+                likeButton.addEventListener('click', async function () {
+                    try {
+                        const response = await fetch(`/blueprints/${blueprintId}/like`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            }
+                        });
+
+                        const data = await response.json();
+
+                        // Update like count
+                        likesCountElement.textContent = data.likes_count;
+
+                        // Update button state
+                        if (data.liked) {
+                            likeButton.classList.remove('bg-white', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'border-gray-300', 'dark:border-gray-600', 'hover:bg-gray-50', 'dark:hover:bg-gray-700');
+                            likeButton.classList.add('bg-red-600', 'text-white', 'border-red-600', 'hover:bg-red-700');
+                            likeTextElement.textContent = 'Liked';
+                            likeButton.querySelector('svg').outerHTML = `@svg('mdi-heart', 'mr-2 h-4 w-4')`;
+                        } else {
+                            likeButton.classList.remove('bg-red-600', 'text-white', 'border-red-600', 'hover:bg-red-700');
+                            likeButton.classList.add('bg-white', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'border-gray-300', 'dark:border-gray-600', 'hover:bg-gray-50', 'dark:hover:bg-gray-700');
+                            likeTextElement.textContent = 'Like';
+                            likeButton.querySelector('svg').outerHTML = `@svg('mdi-heart-outline', 'mr-2 h-4 w-4')`;
+                        }
+
+                        likeButton.dataset.liked = data.liked ? 'true' : 'false';
+                    } catch (error) {
+                        console.error('Error toggling like:', error);
+                    }
+                });
+            });
+        </script>
+    @endauth
 </x-app-layout>

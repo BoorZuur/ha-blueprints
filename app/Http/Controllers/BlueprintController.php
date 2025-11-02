@@ -13,7 +13,7 @@ class BlueprintController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Blueprint::with(['user', 'category']);
+        $query = Blueprint::with(['user', 'category', 'likes']);
 
         // Apply search filter
         if ($request->has('search') && $request->search) {
@@ -40,6 +40,14 @@ class BlueprintController extends Controller
      */
     public function create()
     {
+        // Check if user has given at least 2 likes
+        $likesGiven = Auth::user()->likes()->count();
+
+        if ($likesGiven < 2) {
+            return redirect()->route('blueprints.index')
+                ->with('error', 'You must give at least 2 likes before you can create a blueprint. You have given ' . $likesGiven . ' like(s).');
+        }
+
         $categories = \App\Models\Category::all();
         return view('blueprints.create', compact('categories'));
     }
@@ -49,6 +57,14 @@ class BlueprintController extends Controller
      */
     public function store(Request $request)
     {
+        // Check if user has given at least 2 likes
+        $likesGiven = Auth::user()->likes()->count();
+
+        if ($likesGiven < 2) {
+            return redirect()->route('blueprints.index')
+                ->with('error', 'You must give at least 2 likes before you can create a blueprint. You have given ' . $likesGiven . ' like(s).');
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
@@ -70,12 +86,20 @@ class BlueprintController extends Controller
      */
     public function show(Blueprint $blueprint)
     {
-        $blueprint->load(['user', 'category']);
+        $blueprint->load(['user', 'category', 'likes']);
+
+        $isLiked = false;
+        if (Auth::check()) {
+            $isLiked = $blueprint->isLikedByUser(Auth::id());
+        }
+
         return view('blueprints.show', [
             'blueprint' => $blueprint,
             'username' => $blueprint->user->name,
             'category' => $blueprint->category->name,
             'icon' => $blueprint->category->icon,
+            'likesCount' => $blueprint->likesCount(),
+            'isLiked' => $isLiked,
         ]);
     }
 

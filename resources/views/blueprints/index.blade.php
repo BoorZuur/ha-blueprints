@@ -10,6 +10,7 @@
 
             @auth
                 <div class="mb-6">
+
                     <a href="{{ route('blueprints.create') }}"
                        class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition">
                         Create New Blueprint
@@ -82,6 +83,13 @@
                 </div>
             @endif
 
+            @if (session('error'))
+                <div
+                    class="mb-6 p-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-200 rounded-lg">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             @if($blueprints->isEmpty())
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <p class="text-gray-600 dark:text-gray-400 text-center">
@@ -118,9 +126,15 @@
                                         <!-- Metadata -->
                                         <div
                                             class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
-                                            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                                                @svg('mdi-account', 'w-4 h-4 mr-1')
-                                                <span>{{ $blueprint->user->name ?? 'Unknown' }}</span>
+                                            <div class="flex items-center gap-3">
+                                                <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                                    @svg('mdi-account', 'w-4 h-4 mr-1')
+                                                    <span>{{ $blueprint->user->name ?? 'Unknown' }}</span>
+                                                </div>
+                                                <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                                    @svg('mdi-heart', 'w-4 h-4 mr-1')
+                                                    <span>{{ $blueprint->likesCount() }}</span>
+                                                </div>
                                             </div>
                                             @if($blueprint->category)
                                                 <div
