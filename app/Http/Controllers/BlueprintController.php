@@ -69,7 +69,7 @@ class BlueprintController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'url' => ['required', 'string', 'url', 'max:255'],
-            'category' => ['required']
+            'category' => ['required', 'exists:categories,id']
         ]);
         $blueprint = new Blueprint();
         $blueprint->name = $request->input('name');
@@ -121,7 +121,7 @@ class BlueprintController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'url' => ['required', 'string', 'url', 'max:255'],
-            'category' => ['required']
+            'category' => ['required', 'exists:categories,id']
         ]);
         $blueprint->name = $request->input('name');
         $blueprint->description = $request->input('description');
