@@ -24,38 +24,64 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 [//]: # (- item)
 
-30/10/2025
+## 02/11/2025
+
 ### Added
+
+- Search and filter functionality for blueprints
+- Toggle button in admin blueprints list to switch visibility status
+
+### Changed
+
+- Show blueprints request now in admin blueprint list
+
+## Removed
+
+- Show checkbox from blueprint create/edit forms
+
+## 30/10/2025
+
+### Added
+
 - Deployer to requirements
 
 ## 29/10/2025
+
 ### Added
+
 - Admin views for users, blueprints, and categories
 
 ### Changed
+
 - Routes to include admin views
 
 ## 28/10/2025
+
 ### Added
+
 - Admin middleware
 - Admin controllers for users, blueprints, and categories
 - Admin routes
 
 ### Changed
+
 - Update routes to include admin routes
 - Navbar links for admin panel
 - added protected fillable to category model
 
 ### Removed
+
 - Remove tags table
 
 ## 27/10/2025
 
 ### Changed
+
 - User roles from string to int
 - Update BlueprintController and views to require URL
 
 ### Removed
+
 - Blueprint code field
 
 ## 23/10/2025

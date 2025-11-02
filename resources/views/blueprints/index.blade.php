@@ -18,6 +18,63 @@
                 </div>
             @endauth
 
+            <!-- Search and Filter Form -->
+            <div class="mb-6 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <form action="{{ route('blueprints.index') }}" method="GET" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Search Input -->
+                        <div>
+                            <label for="search" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                @svg('mdi-magnify', 'inline w-4 h-4 mr-1')
+                                Search
+                            </label>
+                            <input type="text"
+                                   id="search"
+                                   name="search"
+                                   value="{{ request('search') }}"
+                                   placeholder="Search by title or description..."
+                                   class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 dark:focus:border-blue-600 focus:ring-blue-500 dark:focus:ring-blue-600 shadow-sm">
+                        </div>
+
+                        <!-- Category Filter -->
+                        <div>
+                            <label for="category"
+                                   class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                @svg('mdi-filter', 'inline w-4 h-4 mr-1')
+                                Category
+                            </label>
+                            <select id="category"
+                                    name="category"
+                                    class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 dark:focus:border-blue-600 focus:ring-blue-500 dark:focus:ring-blue-600 shadow-sm">
+                                <option value="">All Categories</option>
+                                @foreach($categories as $category)
+                                    <option
+                                        value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex gap-2">
+                        <button type="submit"
+                                class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition">
+                            @svg('mdi-magnify', 'w-4 h-4 mr-1')
+                            Search
+                        </button>
+                        @if(request('search') || request('category'))
+                            <a href="{{ route('blueprints.index') }}"
+                               class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:ring focus:ring-gray-200 active:bg-gray-600 disabled:opacity-25 transition">
+                                @svg('mdi-close', 'w-4 h-4 mr-1')
+                                Clear Filters
+                            </a>
+                        @endif
+                    </div>
+                </form>
+            </div>
+
             @if (session('success'))
                 <div
                     class="mb-6 p-4 bg-green-100 dark:bg-green-900 border border-green-400 dark:border-green-700 text-green-700 dark:text-green-200 rounded-lg">
@@ -27,8 +84,13 @@
 
             @if($blueprints->isEmpty())
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <p class="text-gray-600 dark:text-gray-400 text-center">No blueprints found. Create your first
-                        blueprint!</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-center">
+                        @if(request('search') || request('category'))
+                            No blueprints found matching your search criteria. Try adjusting your filters.
+                        @else
+                            No blueprints found. Create your first blueprint!
+                        @endif
+                    </p>
                 </div>
             @else
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -11,10 +11,28 @@ class BlueprintController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $blueprints = Blueprint::with(['user', 'category'])->get();
-        return view('blueprints.index', compact('blueprints'));
+        $query = Blueprint::with(['user', 'category']);
+
+        // Apply search filter
+        if ($request->has('search') && $request->search) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('description', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // Apply category filter
+        if ($request->has('category') && $request->category) {
+            $query->where('category_id', $request->category);
+        }
+
+        $blueprints = $query->get();
+        $categories = \App\Models\Category::all();
+
+        return view('blueprints.index', compact('blueprints', 'categories'));
     }
 
     /**

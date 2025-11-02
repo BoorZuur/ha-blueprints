@@ -20,16 +20,6 @@ class BlueprintController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $categories = Category::all();
-        $users = User::all();
-        return view('admin.blueprints.create', compact('categories', 'users'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -40,12 +30,24 @@ class BlueprintController extends Controller
             'url' => ['required', 'string', 'url', 'max:255'],
             'category_id' => ['required', 'exists:categories,id'],
             'user_id' => ['required', 'exists:users,id'],
-            'show' => ['boolean'],
         ]);
+
+        // New blueprints are hidden by default
+        $validated['show'] = false;
 
         Blueprint::create($validated);
 
         return redirect()->route('admin.blueprints.index')->with('success', 'Blueprint created successfully.');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $categories = Category::all();
+        $users = User::all();
+        return view('admin.blueprints.create', compact('categories', 'users'));
     }
 
     /**
@@ -59,6 +61,18 @@ class BlueprintController extends Controller
     }
 
     /**
+     * Toggle the show status of the blueprint.
+     */
+    public function toggleShow(Blueprint $blueprint)
+    {
+        $blueprint->update([
+            'show' => !$blueprint->show
+        ]);
+
+        return redirect()->route('admin.blueprints.index')->with('success', 'Blueprint visibility toggled successfully.');
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Blueprint $blueprint)
@@ -69,7 +83,6 @@ class BlueprintController extends Controller
             'url' => ['required', 'string', 'url', 'max:255'],
             'category_id' => ['required', 'exists:categories,id'],
             'user_id' => ['required', 'exists:users,id'],
-            'show' => ['boolean'],
         ]);
 
         $blueprint->update($validated);

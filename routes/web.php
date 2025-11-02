@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\BlueprintController as AdminBlueprintController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\BlueprintController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\Admin\BlueprintController as AdminBlueprintController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -91,6 +91,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/blueprints', [AdminBlueprintController::class, 'store'])->name('admin.blueprints.store');
     Route::get('/admin/blueprints/{blueprint}/edit', [AdminBlueprintController::class, 'edit'])->name('admin.blueprints.edit');
     Route::put('/admin/blueprints/{blueprint}', [AdminBlueprintController::class, 'update'])->name('admin.blueprints.update');
+    Route::post('/admin/blueprints/{blueprint}/toggle-show', [AdminBlueprintController::class, 'toggleShow'])->name('admin.blueprints.toggleShow');
     Route::delete('/admin/blueprints/{blueprint}', [AdminBlueprintController::class, 'destroy'])->name('admin.blueprints.destroy');
 });
 
